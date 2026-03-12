@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Favicon Converter</title>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link id="favicon" rel="icon" href="">
+<link rel="icon" href="appicon (2).ico">
+<style>
+:root{
+    --bg-primary:#f4efe6;
+    --bg-secondary:#fffdf8;
+    --panel:#fffaf2;
+    --panel-strong:#ffffff;
+    --text-primary:#1d1d1b;
+    --text-muted:#6f675d;
+    --accent:#c46a2d;
+    --accent-dark:#9d4f1f;
+    --accent-soft:#f2ddc8;
+    --border:#e4d8c9;
+    --shadow:0 24px 60px rgba(74, 50, 30, 0.14);
+}
+
+*{
+    box-sizing:border-box;
+}
+
+body{
+    margin:0;
+    min-height:100vh;
+    font-family:Georgia, "Times New Roman", serif;
+    color:var(--text-primary);
+    background:
+        radial-gradient(circle at top left, rgba(196, 106, 45, 0.18), transparent 28%),
+        radial-gradient(circle at bottom right, rgba(126, 154, 118, 0.14), transparent 24%),
+        linear-gradient(135deg, var(--bg-primary), var(--bg-secondary));
+    padding:32px 18px;
+}
+
+.page-shell{
+    width:min(1120px, 100%);
+    margin:0 auto;
+    display:grid;
+    gap:22px;
+}
+
+.site-header,
+.site-footer{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:18px;
+    min-height:124px;
+    padding:26px 34px;
+    border:1px solid rgba(228, 216, 201, 0.9);
+    border-radius:22px;
+    background:rgba(255, 250, 242, 0.82);
+    box-shadow:0 12px 30px rgba(74, 50, 30, 0.08);
+    backdrop-filter:blur(8px);
+}
+
+.brand-block{
+    display:flex;
+    flex-direction:column;
+    gap:4px;
+}
+
+.brand-kicker,
+.meta-chip,
+.footer-meta{
+    font-family:"Segoe UI", Tahoma, sans-serif;
+    font-size:0.78rem;
+    letter-spacing:0.14em;
+    text-transform:uppercase;
+    color:var(--accent-dark);
+}
+
+.brand-title{
+    margin:0;
+    font-size:1.35rem;
+    letter-spacing:-0.02em;
+}
+
+.brand-subtitle,
+.footer-credit{
+    margin:0;
+    font-family:"Segoe UI", Tahoma, sans-serif;
+    color:var(--text-muted);
+    line-height:1.6;
+}
+
+.meta-chip{
+    padding:10px 14px;
+    border-radius:999px;
+    background:rgba(196, 106, 45, 0.1);
+    white-space:nowrap;
+}
+
+.app-card{
+    width:min(960px, 100%);
+    margin:0 auto;
+    display:grid;
+    grid-template-columns:1.15fr 0.85fr;
+    gap:28px;
+    background:rgba(255, 250, 242, 0.9);
+    border:1px solid rgba(228, 216, 201, 0.9);
+    border-radius:28px;
+    box-shadow:var(--shadow);
+    overflow:hidden;
+    backdrop-filter:blur(8px);
+}
+
+.hero-panel,
+.preview-panel{
+    padding:40px;
+}
+
+.hero-panel{
+    background:linear-gradient(180deg, rgba(255, 255, 255, 0.45), rgba(255, 248, 239, 0.8));
+}
+
+.eyebrow{
+    margin:0 0 14px;
+    font-size:12px;
+    letter-spacing:0.24em;
+    text-transform:uppercase;
+    color:var(--accent-dark);
+}
+
+h1{
+    margin:0;
+    font-size:clamp(2.2rem, 5vw, 3.8rem);
+    line-height:1;
+    letter-spacing:-0.03em;
+}
+
+.lead{
+    margin:18px 0 0;
+    max-width:560px;
+    font-family:"Segoe UI", Tahoma, sans-serif;
+    font-size:1rem;
+    line-height:1.7;
+    color:var(--text-muted);
+}
+
+.upload-box{
+    margin-top:30px;
+    padding:24px;
+    border:1px solid var(--border);
+    border-radius:22px;
+    background:rgba(255, 255, 255, 0.72);
+}
+
+.field-label,
+.panel-title,
+.steps-title{
+    display:block;
+    margin-bottom:10px;
+    font-family:"Segoe UI", Tahoma, sans-serif;
+    font-size:0.92rem;
+    font-weight:600;
+    color:var(--text-primary);
+}
+
+.file-input{
+    width:100%;
+    padding:14px;
+    border:1px dashed var(--border);
+    border-radius:16px;
+    background:var(--panel-strong);
+    font-family:"Segoe UI", Tahoma, sans-serif;
+    color:var(--text-muted);
+}
+
+.file-input::file-selector-button{
+    margin-right:14px;
+    padding:10px 16px;
+    border:none;
+    border-radius:999px;
+    background:var(--accent-soft);
+    color:var(--accent-dark);
+    font-weight:600;
+    cursor:pointer;
+}
+
+.actions{
+    display:flex;
+    flex-wrap:wrap;
+    gap:14px;
+    margin-top:20px;
+}
+
+.btn{
+    border:none;
+    border-radius:999px;
+    padding:14px 22px;
+    font-family:"Segoe UI", Tahoma, sans-serif;
+    font-size:0.95rem;
+    font-weight:600;
+    cursor:pointer;
+    transition:transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+}
+
+.btn:hover{
+    transform:translateY(-1px);
+}
+
+.btn-primary{
+    background:linear-gradient(135deg, var(--accent), var(--accent-dark));
+    color:#fff;
+    box-shadow:0 14px 28px rgba(157, 79, 31, 0.22);
+}
+
+.btn-secondary{
+    background:var(--panel-strong);
+    color:var(--text-primary);
+    border:1px solid var(--border);
+}
+
+.steps{
+    margin-top:30px;
+    padding:0;
+    list-style:none;
+    display:grid;
+    gap:14px;
+}
+
+.steps li{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    font-family:"Segoe UI", Tahoma, sans-serif;
+    color:var(--text-muted);
+}
+
+.step-index{
+    width:30px;
+    height:30px;
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    border-radius:50%;
+    background:var(--accent-soft);
+    color:var(--accent-dark);
+    font-weight:700;
+    flex-shrink:0;
+}
+
+.preview-panel{
+    background:linear-gradient(180deg, rgba(241, 230, 217, 0.56), rgba(255, 255, 255, 0.92));
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+}
+
+.preview-card{
+    padding:28px;
+    border-radius:24px;
+    background:rgba(255, 255, 255, 0.8);
+    border:1px solid rgba(228, 216, 201, 0.9);
+    text-align:center;
+}
+
+.preview-note{
+    margin:0 0 22px;
+    font-family:"Segoe UI", Tahoma, sans-serif;
+    font-size:0.95rem;
+    line-height:1.6;
+    color:var(--text-muted);
+}
+
+.preview-frame{
+    width:170px;
+    height:170px;
+    margin:0 auto 18px;
+    border-radius:28px;
+    background:
+        linear-gradient(135deg, rgba(196, 106, 45, 0.12), rgba(126, 154, 118, 0.1)),
+        var(--panel-strong);
+    border:1px solid var(--border);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    box-shadow:inset 0 1px 0 rgba(255,255,255,0.8);
+}
+
+#previewImage{
+    width:84px;
+    height:84px;
+    object-fit:contain;
+    border-radius:18px;
+    background:#fff;
+    padding:10px;
+    border:1px solid rgba(228, 216, 201, 0.9);
+}
+
+.caption{
+    margin:0;
+    font-family:"Segoe UI", Tahoma, sans-serif;
+    font-size:0.88rem;
+    color:var(--text-muted);
+}
+
+@media (max-width: 780px){
+    .site-header,
+    .site-footer{
+        flex-direction:column;
+        align-items:flex-start;
+        min-height:auto;
+        padding:22px;
+    }
+
+    .app-card{
+        grid-template-columns:1fr;
+    }
+
+    .hero-panel,
+    .preview-panel{
+        padding:28px;
+    }
+}
+</style>
+
+</head>
+
+<body>
+
+<main class="page-shell">
+    <header class="site-header">
+        <div class="brand-block">
+            <span class="brand-kicker">Web Engineering Assignment</span>
+            <h2 class="brand-title">Favicon Converter Project</h2>
+            <p class="brand-subtitle">A clean browser-based tool for converting uploaded images into website-ready favicon previews.</p>
+        </div>
+        <span class="meta-chip">Prepared for Web Engineering</span>
+    </header>
+
+    <section class="app-card">
+        <div class="hero-panel">
+            <p class="eyebrow">Favicon Studio</p>
+            <h1>Turn any image into a polished website icon.</h1>
+            <p class="lead">Upload a logo, illustration, or animated GIF and generate a preview-ready favicon for your site. Static images are prepared for icon use, while GIF uploads keep their animation for quick experimentation.</p>
+
+            <div class="upload-box">
+                <label class="field-label" for="imageInput">Choose an image file</label>
+                <input class="file-input" type="file" id="imageInput" accept="image/*">
+
+                <div class="actions">
+                    <button class="btn btn-primary" onclick="convertImage()">Convert & Preview</button>
+                    <button class="btn btn-secondary" onclick="downloadIcon()">Download Icon</button>
+                </div>
+            </div>
+
+            <span class="steps-title">How it works</span>
+            <ul class="steps">
+                <li><span class="step-index">1</span>Select any supported image file from your device.</li>
+                <li><span class="step-index">2</span>Preview the converted result instantly in the icon panel.</li>
+                <li><span class="step-index">3</span>Download the generated favicon for your website.</li>
+            </ul>
+        </div>
+
+        <aside class="preview-panel">
+            <div class="preview-card">
+                <span class="panel-title">Live favicon preview</span>
+                <p class="preview-note">Your selected image will appear here after conversion. The page favicon updates at the same time.</p>
+                <div class="preview-frame">
+                    <img id="previewImage" alt="">
+                </div>
+                <p class="caption">Optimized preview area for quick visual checks before download.</p>
+            </div>
+        </aside>
+    </section>
+
+    <footer class="site-footer">
+        <div>
+            <span class="footer-meta">Student Credit</span>
+            <p class="footer-credit">Designed and developed by Virsha Arif for the Web Engineering task.</p>
+        </div>
+        <span class="meta-chip">favicon.html</span>
+    </footer>
+</main>
+
+<canvas id="canvas" width="256" height="256" style="display:none;"></canvas>
+
+<script>
+
+let iconData = "";
+let fileType = "";
+
+function convertImage(){
+
+    const file = document.getElementById("imageInput").files[0];
+
+    if(!file){
+        alert("Upload an image first");
+        return;
+    }
+
+    fileType = file.type;
+
+    const reader = new FileReader();
+
+    // GIF CASE (keep animation)
+    if(fileType === "image/gif"){
+
+        reader.onload = function(e){
+
+            iconData = e.target.result;
+
+            document.getElementById("previewImage").src = iconData;
+            document.getElementById("favicon").href = iconData;
+
+        }
+
+        reader.readAsDataURL(file);
+    }
+
+    // STATIC IMAGE CASE (convert to ICO)
+    else{
+
+        const img = new Image();
+
+        reader.onload = function(e){
+            img.src = e.target.result;
+        }
+
+        img.onload = function(){
+
+            const canvas = document.getElementById("canvas");
+            const ctx = canvas.getContext("2d");
+
+            ctx.clearRect(0,0,256,256);
+            ctx.drawImage(img,0,0,256,256);
+
+            iconData = canvas.toDataURL("image/png");
+
+            document.getElementById("previewImage").src = iconData;
+            document.getElementById("favicon").href = iconData;
+        }
+
+        reader.readAsDataURL(file);
+    }
+}
+
+function downloadIcon(){
+
+    if(!iconData){
+        alert("Convert image first");
+        return;
+    }
+
+    const link = document.createElement("a");
+    link.href = iconData;
+
+    if(fileType === "image/gif"){
+        link.download = "appicon.gif";
+    }else{
+        link.download = "appicon.ico";
+    }
+
+    link.click();
+}
+
+</script>
+
+</body>
+</html>
