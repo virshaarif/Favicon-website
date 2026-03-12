@@ -6,8 +6,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<link id="favicon" rel="icon" href="">
-<link rel="icon" href="appicon (2).ico">
+<link id="favicon" rel="icon" href="appicon (2).ico">
 <style>
 :root{
     --bg-primary:#f4efe6;
@@ -410,7 +409,7 @@ function convertImage(){
             iconData = e.target.result;
 
             document.getElementById("previewImage").src = iconData;
-            document.getElementById("favicon").href = iconData;
+            updateFavicon(iconData);
 
         }
 
@@ -437,11 +436,21 @@ function convertImage(){
             iconData = canvas.toDataURL("image/png");
 
             document.getElementById("previewImage").src = iconData;
-            document.getElementById("favicon").href = iconData;
+            updateFavicon(iconData);
         }
 
         reader.readAsDataURL(file);
     }
+}
+
+function updateFavicon(src){
+    const old = document.getElementById("favicon");
+    if(old) old.remove();
+    const link = document.createElement("link");
+    link.id = "favicon";
+    link.rel = "icon";
+    link.href = src;
+    document.head.appendChild(link);
 }
 
 function downloadIcon(){
